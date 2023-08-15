@@ -7,4 +7,4 @@ tasks:
   install:
     desc: Install yamlfmt
     cmds:
-      - os:install
+      - task: os:install
