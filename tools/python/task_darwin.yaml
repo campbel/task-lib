@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  pyenv:
+    status:
+      - command -v pyenv &>/dev/null
+    cmds:
+      - brew install pyenv
