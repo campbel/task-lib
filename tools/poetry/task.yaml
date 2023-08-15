@@ -1,0 +1,10 @@
+version: "3"
+
+tasks:
+  install:
+    # TODO: formalize the implied dependency on python / pip
+    desc: Install poetry
+    status:
+      - pip show poetry
+    cmds:
+      - pip install poetry
