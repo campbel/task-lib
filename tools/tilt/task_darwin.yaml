@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  install:
+    status:
+      - command -v tilt &>/dev/null
+    cmds:
+      - brew install tilt-dev/tap/tilt
