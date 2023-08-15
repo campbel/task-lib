@@ -1,0 +1,10 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install yamlfmt
+    cmds:
+      - os:install
