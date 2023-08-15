@@ -9,13 +9,24 @@ tasks:
     cmds:
       - task: os:pyenv
 
-  install:
-    desc: Install python version
+  use:
+    desc: Use python version
     deps: [pyenv]
     vars:
       GLOBAL: true
     requires:
       vars: [VERSION]
     cmds:
-      - pyenv install {{.VERSION}}
+      - task: install
+        vars: { VERSION: "{{.VERSION}}" }
       - '{{if eq .GLOBAL "true"}} pyenv global {{.VERSION}} {{end}}'
+
+  install:
+    desc: Install python version
+    deps: [pyenv]
+    status:
+      - pyenv versions | grep {{.VERSION}}
+    requires:
+      vars: [VERSION]
+    cmds:
+      - pyenv install {{.VERSION}}
