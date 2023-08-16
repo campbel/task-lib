@@ -8,3 +8,29 @@ tasks:
     desc: Install yamlfmt
     cmds:
       - task: os:install
+
+  format:
+    desc: Format yaml files
+    aliases: [fmt]
+    cmds:
+      - yamlfmt .
+
+  lint:
+    desc: Lint yaml files
+    cmds:
+      - yamlfmt -lint .
+
+  init:
+    desc: Initialize yamlfmt
+    status:
+      - "[[-f .yamlfmt ]]"
+    vars:
+      CONFIG: |
+        formatter:
+          type: basic
+          include_document_start: true
+          pad_line_comments: 2
+          line_ending: lf
+          retain_line_breaks: true
+    cmds:
+      - echo "{{.CONFIG}}" > .yamlfmt
