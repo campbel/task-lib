@@ -1,0 +1,34 @@
+version: "3"
+
+tasks:
+  install_latest:
+    desc: Install dotnet
+    cmds:
+      - brew install --cask dotnet-sdk
+
+  # Dotnet 6 install is hardcoded
+  install_6:
+    status:
+      - dotnet --list-sdks | grep {{.VERSION}}
+    vars:
+      URL: |
+        {{- if eq ARCH "arm64" -}}
+          https://download.visualstudio.microsoft.com/download/pr/d95d315f-8088-440b-88db-1e84398f6167/0a450912f02c207430bcc4bc9aaeefc1/dotnet-sdk-6.0.413-osx-arm64.pkg
+        {{- else -}}
+          https://download.visualstudio.microsoft.com/download/pr/f8ef7ef6-04f0-4d7f-a39d-127d7cf099a9/021922f4a6860bcd8257df91a53cb5d0/dotnet-sdk-6.0.413-osx-x64.pkg
+        {{- end -}}
+      CHECKSUM: |
+        {{- if eq ARCH "arm64" -}}
+          f643aa993a0b52808b7869a13697d4ca21259cd814f08fe1bf0b9d80e4baab2ec0af1d9367eb9750c87a211fdab41f73f0ab5570d1970ca946acbb748a2b2bcc
+        {{- else -}}
+          4390ba65e592c4f770b247f11228bbd2ed70aab30fbe6613c2bf7ec0c7c54d09b5a47ff160d4424dacc59661613fd4c9460d62f141a64def02a7228dd160f916
+        {{- end -}}
+      TEMP_DIR:
+        sh: mktemp -d
+    cmds:
+      - echo "Downloading {{.URL}}..."
+      - defer: rm -rf {{.TEMP_DIR}}
+      - curl -Lo {{.TEMP_DIR}}/dotnet-sdk.pkg {{.URL}}
+      - echo "{{.CHECKSUM}}  {{.TEMP_DIR}}/dotnet-sdk.pkg" | shasum -a 512 -c
+      - echo "Installing pkg, will prompt for sudo"
+      - sudo installer -pkg {{.TEMP_DIR}}/dotnet-sdk.pkg -target /
