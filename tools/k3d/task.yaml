@@ -1,0 +1,27 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install k3d
+    cmds:
+      - task: os:install
+
+  create_cluster:
+    desc: Create a k3d cluster
+    status:
+      - k3d cluster list | grep "^{{.CLUSTER_NAME}}"
+    vars:
+      CLUSTER_NAME: default
+      REGISTRY: true
+      REGISTRY_NAME: local-registry
+      REGISTRY_PORT: 5000
+    cmds:
+      - |
+        {{if eq .REGISTRY "true"}}
+          k3d cluster create $CLUSTER_NAME --registry-create {{.REGISTRY_NAME}}:0.0.0.0{{.REGISTRY_PORT}}
+        {{else}}
+          k3d cluster create $CLUSTER_NAME
+        {{end}}

@@ -1,0 +1,9 @@
+---
+version: "3"
+
+tasks:
+  install:
+    status:
+      - command -v k3d
+    cmds:
+      - brew install k3d

@@ -6,6 +6,7 @@ includes:
   awscli: ./tools/awscli/task.yaml
   dotnet: ./tools/dotnet/task.yaml
   kubectl: ./tools/kubectl/task.yaml
+  k3d: ./tools/k3d/task.yaml
   orbstack: ./tools/orbstack/task.yaml
   poetry: ./tools/poetry/task.yaml
   python: ./tools/python/task.yaml
