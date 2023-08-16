@@ -9,6 +9,7 @@ includes:
   orbstack: ./tools/orbstack/task.yaml
   poetry: ./tools/poetry/task.yaml
   python: ./tools/python/task.yaml
+  rancher: ./tools/rancher/task.yaml
   sops: ./tools/sops/task.yaml
   tilt: ./tools/tilt/task.yaml
   yamlfmt: ./tools/yamlfmt/task.yaml

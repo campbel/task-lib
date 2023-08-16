@@ -1,0 +1,16 @@
+version: "3"
+
+tasks:
+  install:
+    status:
+      - command -v rancher &>/dev/null
+    vars:
+      TEMP_DIR:
+        sh: mktemp -d
+    cmds:
+      - defer: rm -rf {{.TEMP_DIR}}
+      - curl -Lo {{.TEMP_DIR}}/rd.dmg https://github.com/rancher-sandbox/rancher-desktop/releases/download/v1.9.1/Rancher.Desktop-1.9.1.aarch64.dmg
+      - sudo hdiutil attach {{.TEMP_DIR}}/rd.dmg
+      - defer: sudo hdiutil detach "/Volumes/Rancher Desktop 1.9.1"
+      - sudo cp -R "/Volumes/Rancher Desktop 1.9.1/Rancher Desktop.app" /Applications
+      - open -n "/Applications/Rancher Desktop.app"
