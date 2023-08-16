@@ -34,3 +34,36 @@ tasks:
           retain_line_breaks: true
     cmds:
       - echo "{{.CONFIG}}" > .yamlfmt
+
+  init-action:
+    desc: Create a new GitHub action
+    status:
+      - "[[-f .github/workflows/{{.NAME}}.yaml ]]"
+    vars:
+      NAME: "yaml-lint"
+      CONFIG: |
+        ---
+        name: YAML lint
+        on:
+          push:
+            branches:
+              - main
+          pull_request:
+            branches:
+              - main
+
+        jobs:
+          format:
+            name: YAML lint
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v2
+              - uses: actions/setup-go@v4
+                with:
+                  go-version: "1.20"
+              - name: Install dependencies
+                run: go install github.com/google/yamlfmt/cmd/yamlfmt@latest
+              - name: Format
+                run: yamlfmt -lint .
+    cmds:
+      - echo "{{.CONFIG}}" > .github/workflows/{{.NAME}}.yaml
