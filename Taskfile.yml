@@ -1,0 +1,19 @@
+# https://taskfile.dev
+
+version: "3"
+
+includes:
+  awscli: ./tools/awscli/task.yaml
+  dotnet: ./tools/dotnet/task.yaml
+  kubectl: ./tools/kubectl/task.yaml
+  poetry: ./tools/poetry/task.yaml
+  python: ./tools/python/task.yaml
+  sops: ./tools/sops/task.yaml
+  tilt: ./tools/tilt/task.yaml
+  yamlfmt: ./tools/yamlfmt/task.yaml
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
