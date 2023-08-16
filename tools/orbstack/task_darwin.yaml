@@ -1,0 +1,10 @@
+---
+version: "3"
+
+tasks:
+  install:
+    status:
+      - command -v orb
+    cmds:
+      - brew install --cask orbstack
+      - open -n /Applications/OrbStack.app
