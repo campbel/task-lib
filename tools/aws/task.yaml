@@ -19,3 +19,9 @@ tasks:
       - aws sts get-caller-identity
     cmds:
       - aws sso login
+
+  aws:
+    desc: Run aws cli
+    deps: [login]
+    cmds:
+      - aws {{.ARGS}}
