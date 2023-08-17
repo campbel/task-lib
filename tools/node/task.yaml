@@ -1,0 +1,33 @@
+---
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  nvm:
+    desc: Install nvm
+    silent: true
+    cmds:
+      - task: os:nvm
+
+  install:
+    desc: Install node version
+    silent: true
+    cmds:
+      - task: nvm
+      - task: os:install
+        vars:
+          VERSION: "{{.VERSION}}"
+
+  run:
+    desc: Run node command with specified version
+    silent: true
+    cmds:
+      - task: install
+        vars:
+          VERSION: "{{.VERSION}}"
+      - task: os:run
+        vars:
+          VERSION: "{{.VERSION}}"
+          ARGS: "{{.ARGS}}"

@@ -1,0 +1,47 @@
+---
+version: "3"
+
+tasks:
+  silent: true
+  nvm:
+    status:
+      - "ls /opt/homebrew/opt/nvm"
+    cmds:
+      - brew install nvm
+
+  install:
+    silent: true
+    status:
+      - |
+        . /opt/homebrew/opt/nvm/nvm.sh
+        VERSION="{{.VERSION}}"
+        if [[ -f .nvmrc ]]; then
+          VERSION=$(cat .nvmrc)
+        fi
+        nvm ls | grep $VERSION
+    cmds:
+      - |
+        . /opt/homebrew/opt/nvm/nvm.sh
+        if [[ -f .nvmrc ]]; then
+          nvm install
+        elif [[ -z "{{.VERSION}}" ]]; then
+          nvm install {{.VERSION}}
+        else
+          echo "No .nvmrc file found, and no version specified"
+          exit 1
+        fi
+
+  run:
+    silent: true
+    cmds:
+      - |
+        . /opt/homebrew/opt/nvm/nvm.sh
+        if [[ -f .nvmrc ]]; then
+          nvm use
+        elif [[ -z "{{.VERSION}}" ]]; then
+          nvm use {{.VERSION}}
+        else
+          echo "No .nvmrc file found, and no version specified"
+          exit 1
+        fi
+        node {{.ARGS}}

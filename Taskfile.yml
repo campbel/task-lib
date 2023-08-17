@@ -11,6 +11,7 @@ includes:
   go1.21: ./tools/go/1.21/task.yaml
   kubectl: ./tools/kubectl/task.yaml
   k3d: ./tools/k3d/task.yaml
+  node: ./tools/node/task.yaml
   orbstack: ./tools/orbstack/task.yaml
   poetry: ./tools/poetry/task.yaml
   pulumi: ./tools/pulumi/task.yaml
@@ -25,3 +26,12 @@ tasks:
     cmds:
       - task --list
     silent: true
+
+  node-run:
+    desc: Run node
+    silent: true
+    cmds:
+      - echo "Running node {{.CLI_ARGS}}"
+      - task: node:run
+        vars:
+          ARGS: "{{.CLI_ARGS}}"
