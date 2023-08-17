@@ -1,3 +1,4 @@
+---
 version: "3"
 
 includes:
@@ -18,7 +19,7 @@ tasks:
       vars: [VERSION]
     cmds:
       - task: install
-        vars: { VERSION: "{{.VERSION}}" }
+        vars: {VERSION: "{{.VERSION}}"}
       - '{{if eq .GLOBAL "true"}} pyenv global {{.VERSION}} {{end}}'
 
   install:

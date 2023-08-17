@@ -1,3 +1,4 @@
+---
 version: "3"
 
 includes:
@@ -11,12 +12,14 @@ tasks:
 
   format:
     desc: Format yaml files
+    deps: [install]
     aliases: [fmt]
     cmds:
       - yamlfmt .
 
   lint:
     desc: Lint yaml files
+    deps: [install]
     cmds:
       - yamlfmt -lint .
 
