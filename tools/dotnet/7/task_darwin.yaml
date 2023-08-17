@@ -1,0 +1,28 @@
+version: "3"
+
+tasks:
+  install:
+    status:
+      - dotnet --list-sdks | grep 7.0.400
+    vars:
+      URL: |
+        {{- if eq ARCH "arm64" -}}
+        https://download.visualstudio.microsoft.com/download/pr/006fcd0f-5c39-462b-8425-8af5c66915d0/de20d3b86725a79b7d0de0f3f9c86b05/dotnet-sdk-7.0.400-osx-arm64.pkg
+        {{- else -}}
+        https://download.visualstudio.microsoft.com/download/pr/f4c17ae1-56c5-4d79-8ce2-31c46a861a96/e39ebd96c092d4acb394c864aa0c8eaa/dotnet-sdk-7.0.400-osx-x64.pkg
+        {{- end -}}
+      CHECKSUM: |
+        {{- if eq ARCH "arm64" -}}
+        a05c80fd9df614dd5377ae55732653a147e8db0bf263d05148bdea67141e2bce6fe3be7b662fd215b6480ee1887eae32da4de2c824adff7301a743adab022ba2
+        {{- else -}}
+        e49df7432d9e76656f3d600ff1b97fa4afdacf034ba9451a4e8f71621db621f2b38d86bf6132036cc1a7aa3e10a71d9b1632050444766edd8905c81ef96d827f
+        {{- end -}}
+      TEMP_DIR:
+        sh: mktemp -d
+    cmds:
+      - echo "Downloading {{.URL}}..."
+      - defer: rm -rf {{.TEMP_DIR}}
+      - curl -Lo {{.TEMP_DIR}}/dotnet-sdk.pkg {{.URL}}
+      - echo "{{.CHECKSUM}}  {{.TEMP_DIR}}/dotnet-sdk.pkg" | shasum -a 512 -c
+      - echo "Installing pkg, will prompt for sudo"
+      - sudo installer -pkg {{.TEMP_DIR}}/dotnet-sdk.pkg -target /
