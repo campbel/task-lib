@@ -1,0 +1,21 @@
+---
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install aws cli
+    status:
+      - aws --version
+    cmds:
+      - task: os:install
+
+  login:
+    desc: aws sso login
+    deps: [install]
+    status:
+      - aws sts get-caller-identity
+    cmds:
+      - aws sso login

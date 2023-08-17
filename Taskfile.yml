@@ -4,7 +4,7 @@
 version: "3"
 
 includes:
-  awscli: ./tools/awscli/task.yaml
+  aws: ./tools/aws/task.yaml
   dotnet6: ./tools/dotnet/6/task.yaml
   dotnet7: ./tools/dotnet/7/task.yaml
   kubectl: ./tools/kubectl/task.yaml
