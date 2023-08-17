@@ -7,6 +7,8 @@ includes:
   aws: ./tools/aws/task.yaml
   dotnet6: ./tools/dotnet/6/task.yaml
   dotnet7: ./tools/dotnet/7/task.yaml
+  go1.20: ./tools/go/1.20/task.yaml
+  go1.21: ./tools/go/1.21/task.yaml
   kubectl: ./tools/kubectl/task.yaml
   k3d: ./tools/k3d/task.yaml
   orbstack: ./tools/orbstack/task.yaml

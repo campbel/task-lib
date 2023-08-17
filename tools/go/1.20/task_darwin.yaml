@@ -1,0 +1,29 @@
+---
+version: "3"
+
+tasks:
+  install:
+    status:
+      - go version | grep "^go version go1.20"
+    vars:
+      URL: |
+        {{- if eq ARCH "arm64" -}}
+        https://go.dev/dl/go1.20.7.darwin-arm64.pkg
+        {{- else -}}
+        https://go.dev/dl/go1.20.7.darwin-amd64.pkg
+        {{- end -}}
+      CHECKSUM: |
+        {{- if eq ARCH "arm64" -}}
+        11e92915d54dded5b72e575f099697d90263821d62672f18f7d53db5362232d1
+        {{- else -}}
+        ac6ecdb80b9cba82861c22bfc7f0be03f2e10606e47b77191bcec3bb8ec9f87c
+        {{- end -}}
+      TEMP_DIR:
+        sh: mktemp -d
+    cmds:
+      - echo "Downloading {{.URL}}..."
+      - defer: rm -rf {{.TEMP_DIR}}
+      - curl -Lo {{.TEMP_DIR}}/golang.pkg {{.URL}}
+      - echo "{{.CHECKSUM}}  {{.TEMP_DIR}}/golang.pkg" | shasum -a 256 -c
+      - echo "Installing pkg, will prompt for sudo"
+      - sudo installer -pkg {{.TEMP_DIR}}/golang.pkg -target /
