@@ -27,6 +27,9 @@ tasks:
       - task --list
     silent: true
 
+  # Node depends on nvm, which uses shell variables to modify the environment.
+  # For this reason, it might be simpler to use the node:run task, rather than
+  # relying on users to setup the environment.
   node-run:
     desc: Run node
     silent: true
