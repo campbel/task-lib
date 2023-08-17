@@ -31,7 +31,7 @@ tasks:
           exit 1
         fi
 
-  run:
+  node:
     silent: true
     cmds:
       - |
@@ -45,3 +45,18 @@ tasks:
           exit 1
         fi
         node {{.ARGS}}
+
+  npm:
+    silent: true
+    cmds:
+      - |
+        . /opt/homebrew/opt/nvm/nvm.sh
+        if [[ -f .nvmrc ]]; then
+          nvm use
+        elif [[ -z "{{.VERSION}}" ]]; then
+          nvm use {{.VERSION}}
+        else
+          echo "No .nvmrc file found, and no version specified"
+          exit 1
+        fi
+        npm {{.ARGS}}

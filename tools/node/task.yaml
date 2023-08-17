@@ -20,14 +20,26 @@ tasks:
         vars:
           VERSION: "{{.VERSION}}"
 
-  run:
+  node:
     desc: Run node command with specified version
     silent: true
     cmds:
       - task: install
         vars:
           VERSION: "{{.VERSION}}"
-      - task: os:run
+      - task: os:node
+        vars:
+          VERSION: "{{.VERSION}}"
+          ARGS: "{{.ARGS}}"
+
+  npm:
+    desc: Run npm command with specified version
+    silent: true
+    cmds:
+      - task: install
+        vars:
+          VERSION: "{{.VERSION}}"
+      - task: os:npm
         vars:
           VERSION: "{{.VERSION}}"
           ARGS: "{{.ARGS}}"

@@ -28,13 +28,22 @@ tasks:
     silent: true
 
   # Node depends on nvm, which uses shell variables to modify the environment.
-  # For this reason, it might be simpler to use the node:run task, rather than
-  # relying on users to setup the environment.
+  # For this reason, it might be simpler to use the node:node and node:npm
+  # tasks, rather than relying on users to setup their environment.
   node-run:
     desc: Run node
     silent: true
     cmds:
       - echo "Running node {{.CLI_ARGS}}"
-      - task: node:run
+      - task: node:node
+        vars:
+          ARGS: "{{.CLI_ARGS}}"
+
+  npm-run:
+    desc: Run npm
+    silent: true
+    cmds:
+      - echo "Running node {{.CLI_ARGS}}"
+      - task: node:npm
         vars:
           ARGS: "{{.CLI_ARGS}}"
