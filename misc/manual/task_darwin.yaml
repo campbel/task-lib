@@ -7,15 +7,16 @@ tasks:
     cmds:
       - brew install gum
 
-  prompt_secret:
+  prompt_value:
     deps: [gum]
     silent: true
     requires:
-      vars: [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND]
+      vars:
+        [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND, IS_SECRET]
     cmds:
       - echo "{{.INSTRUCTIONS}}"
       - |
-        SECRET=$(gum input --password --prompt "Secret: " --placeholder "Enter secret here")
+        SECRET=$(gum input {{if eq .IS_SECRET "true"}}--password{{end}} --prompt "Secret: " --placeholder "Enter secret here")
         if [ -z "$SECRET" ]; then
           echo "Secret cannot be empty"
           exit 1
@@ -27,3 +28,16 @@ tasks:
         {{else}}
         echo "$VALUE" > {{.OUTPUT_FILE}}
         {{end}}
+
+  prompt_secret:
+    silent: true
+    requires:
+      vars: [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND]
+    cmds:
+      - task: prompt_value
+        vars:
+          IS_SECRET: true
+          INSTRUCTIONS: "{{.INSTRUCTIONS}}"
+          OUTPUT_TEMPLATE: "{{.OUTPUT_TEMPLATE}}"
+          OUTPUT_FILE: "{{.OUTPUT_FILE}}"
+          OUTPUT_APPEND: "{{.OUTPUT_APPEND}}"
