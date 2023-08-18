@@ -1,3 +1,4 @@
+---
 version: "3"
 
 tasks:
@@ -11,8 +12,7 @@ tasks:
     deps: [gum]
     silent: true
     requires:
-      vars:
-        [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND, IS_SECRET]
+      vars: [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND, IS_SECRET]
     cmds:
       - echo "{{.INSTRUCTIONS}}"
       - |
