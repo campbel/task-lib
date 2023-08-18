@@ -1,0 +1,27 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install GitHub CLI
+    status:
+      - gh --version
+    cmds:
+      - task: os:install
+
+  login:
+    desc: Login to GitHub
+    deps: [install]
+    status:
+      - gh auth status
+    cmds:
+      - gh auth login
+
+  pr:
+    desc: Create / view pull request
+    deps: [login]
+    cmds:
+      - |
+        gh pr view || gh pr create --fill
