@@ -66,3 +66,20 @@ tasks:
           OUTPUT_FILE: ".env"
           OUTPUT_APPEND: true
           OUTPUT_TEMPLATE: "SECRET=$SECRET"
+
+  manual-value:
+    desc: Request user to manually enter a secret
+    silent: true
+    status:
+      - grep "VALUE=.*" .env
+    cmds:
+      - task: manual:prompt_value
+        vars:
+          INSTRUCTIONS: |
+            What is the value?
+            1. Go to this super awesome URL ...
+            2. Copy the value from the page.
+            3. Enter it below.
+          OUTPUT_FILE: ".env"
+          OUTPUT_APPEND: true
+          OUTPUT_TEMPLATE: "VALUE=$SECRET"

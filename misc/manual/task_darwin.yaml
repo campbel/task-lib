@@ -16,7 +16,7 @@ tasks:
     cmds:
       - echo "{{.INSTRUCTIONS}}"
       - |
-        SECRET=$(gum input {{if eq .IS_SECRET "true"}}--password{{end}} --prompt "Secret: " --placeholder "Enter secret here")
+        SECRET=$(gum input {{if eq .IS_SECRET "true"}}--password{{end}} --prompt "{{.INPUT_PROMPT}}" --placeholder "{{.INPUT_PLACEHOLDER}}")
         if [ -z "$SECRET" ]; then
           echo "Secret cannot be empty"
           exit 1
