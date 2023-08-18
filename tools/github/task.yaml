@@ -1,0 +1,32 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install GitHub CLI
+    status:
+      - gh --version
+    cmds:
+      - task: os:install
+
+  login:
+    desc: Login to GitHub
+    deps: [install]
+    status:
+      - gh auth status
+    cmds:
+      - gh auth login
+
+  pr:
+    desc: Create / view pull request
+    deps: [login]
+    cmds:
+      - |
+        gh pr view &> /dev/null
+        if [ $? -eq 0 ]; then
+          gh pr view --web
+        else
+          gh pr create --fill && gh pr view --web
+        fi
