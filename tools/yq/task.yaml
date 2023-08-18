@@ -1,0 +1,12 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install yq
+    status:
+      - yq --version
+    cmds:
+      - task: os:install

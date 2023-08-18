@@ -24,6 +24,7 @@ includes:
   sops: ./tools/sops/task.yaml
   tilt: ./tools/tilt/task.yaml
   yamlfmt: ./tools/yamlfmt/task.yaml
+  yq: ./tools/yq/task.yaml
   # Kit
   kit: ./kit/task.yaml
 tasks:
