@@ -11,7 +11,6 @@ tasks:
       OUTPUT_APPEND: '{{default "false" .OUTPUT_APPEND}}'
       OUTPUT_TEMPLATE: '{{default "$SECRET" .OUTPUT_TEMPLATE}}'
     cmds:
-      - echo "{{.OUTPUT_TEMPLATE}}"
       - task: os:prompt_secret
         vars:
           INSTRUCTIONS: "{{.INSTRUCTIONS}}"

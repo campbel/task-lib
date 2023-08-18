@@ -9,6 +9,7 @@ tasks:
 
   prompt_secret:
     deps: [gum]
+    silent: true
     requires:
       vars: [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND]
     cmds:
