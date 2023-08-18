@@ -11,5 +11,5 @@ tasks:
     cmds:
       - defer: rm -rf {{.TEMP_DIR}}
       - curl -Lo {{.TEMP_DIR}}/yamlfmt.tar.gz https://github.com/google/yamlfmt/releases/download/v0.9.0/yamlfmt_0.9.0_Darwin_{{ARCH}}.tar.gz
-      - tar -xvf {{.TEMP_DIR}}/yamlfmt.tar.gz
-      - sudo mv yamlfmt /usr/local/bin/yamlfmt
+      - tar -xvf {{.TEMP_DIR}}/yamlfmt.tar.gz -C {{.TEMP_DIR}}
+      - sudo mv {{.TEMP_DIR}}/yamlfmt /usr/local/bin/yamlfmt
