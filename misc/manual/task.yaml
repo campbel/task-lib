@@ -1,0 +1,20 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  prompt_secret:
+    requires:
+      vars: [INSTRUCTIONS, OUTPUT_FILE]
+    vars:
+      OUTPUT_APPEND: '{{default "false" .OUTPUT_APPEND}}'
+      OUTPUT_TEMPLATE: '{{default "$SECRET" .OUTPUT_TEMPLATE}}'
+    cmds:
+      - echo "{{.OUTPUT_TEMPLATE}}"
+      - task: os:prompt_secret
+        vars:
+          INSTRUCTIONS: "{{.INSTRUCTIONS}}"
+          OUTPUT_FILE: "{{.OUTPUT_FILE}}"
+          OUTPUT_APPEND: "{{.OUTPUT_APPEND}}"
+          OUTPUT_TEMPLATE: "{{.OUTPUT_TEMPLATE}}"

@@ -1,0 +1,28 @@
+version: "3"
+
+tasks:
+  gum:
+    status:
+      - gum --version
+    cmds:
+      - brew install gum
+
+  prompt_secret:
+    deps: [gum]
+    requires:
+      vars: [INSTRUCTIONS, OUTPUT_TEMPLATE, OUTPUT_FILE, OUTPUT_APPEND]
+    cmds:
+      - echo "{{.INSTRUCTIONS}}"
+      - |
+        SECRET=$(gum input --password --prompt "Secret: " --placeholder "Enter secret here")
+        if [ -z "$SECRET" ]; then
+          echo "Secret cannot be empty"
+          exit 1
+        fi
+        export SECRET
+        VALUE=$(echo "{{.OUTPUT_TEMPLATE}}" | envsubst '$SECRET' )
+        {{if eq .OUTPUT_APPEND "true"}}
+        echo "$VALUE" >> {{.OUTPUT_FILE}}
+        {{else}}
+        echo "$VALUE" > {{.OUTPUT_FILE}}
+        {{end}}

@@ -4,6 +4,8 @@
 version: "3"
 
 includes:
+  manual: ./misc/manual/task.yaml
+
   aws: ./tools/aws/task.yaml
   dotnet6: ./tools/dotnet/6/task.yaml
   dotnet7: ./tools/dotnet/7/task.yaml
@@ -47,3 +49,20 @@ tasks:
       - task: node:npm
         vars:
           ARGS: "{{.CLI_ARGS}}"
+
+  manual-secret:
+    desc: Request user to manually enter a secret
+    silent: true
+    status:
+      - grep "SECRET=.*" .env
+    cmds:
+      - task: manual:prompt_secret
+        vars:
+          INSTRUCTIONS: |
+            What is the secret?
+            1. Go to this super secret URL ...
+            2. Copy the secret from the page.
+            3. Enter it below.
+          OUTPUT_FILE: ".env"
+          OUTPUT_APPEND: true
+          OUTPUT_TEMPLATE: "SECRET=$SECRET"
