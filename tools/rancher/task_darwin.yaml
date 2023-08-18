@@ -4,7 +4,7 @@ version: "3"
 tasks:
   install:
     status:
-      - command -v rancher &>/dev/null
+      - ls /Applications/Rancher\ Desktop.app/
     vars:
       TEMP_DIR:
         sh: mktemp -d
