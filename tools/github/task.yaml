@@ -24,4 +24,4 @@ tasks:
     deps: [login]
     cmds:
       - |
-        gh pr view || gh pr create --fill
+        gh pr view || (gh pr create --fill && gh pr view)
