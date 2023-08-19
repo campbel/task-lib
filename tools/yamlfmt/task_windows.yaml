@@ -6,6 +6,7 @@ tasks:
     silent: true
     vars:
       URL: https://github.com/google/yamlfmt/releases/download/v0.9.0/yamlfmt_0.9.0_Windows_x86_64.tar.gz
+      EXE_NAME: yamlfmt.exe
       TEMP_DIR:
         sh: |
           powershell '
@@ -25,10 +26,10 @@ tasks:
           pushd {{.TEMP_DIR}}
           echo "Downloading file from  {{.URL}}"
           $ProgressPreference = "SilentlyContinue"
-          curl -o yamlfmt.tar.gz "{{.URL}}"
+          curl -o tool.tar.gz "{{.URL}}"
           echo "Unarchiving"
-          tar -xvzf yamlfmt.tar.gz
+          tar -xvzf tool.tar.gz
           "Moving to ${HOME}/tools"
-          Move-Item -Force yamlfmt.exe ${HOME}/tools
+          Move-Item -Force {{.EXE_NAME}} ${HOME}/tools
           popd
         '
