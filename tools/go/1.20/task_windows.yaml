@@ -35,6 +35,7 @@ tasks:
         }
 
         Write-Output "Running installer"
-        msiexec /i $msi_path /passive
+        $log_path = (Join-Path $parent "msiexec.log")
+        Start-Process -FilePath "msiexec.exe" -Wait -ArgumentList "/i $msi_path /passive /l*v $log_path"
     cmds:
       - powershell '{{.PS_SCRIPT}}'
