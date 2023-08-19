@@ -7,6 +7,7 @@ includes:
   # Misc
   manual: ./misc/manual/task.yaml
   # Tools
+  1password: ./tools/1password/task.yaml
   aws: ./tools/aws/task.yaml
   dotnet6: ./tools/dotnet/6/task.yaml
   dotnet7: ./tools/dotnet/7/task.yaml

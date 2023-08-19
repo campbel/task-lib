@@ -1,0 +1,21 @@
+version: "3"
+
+includes:
+  os: ./task_{{OS}}.yaml
+
+tasks:
+  install:
+    desc: Install 1Password CLI
+    status:
+      - op --version
+    cmds:
+      - task: os:install
+
+  login:
+    desc: Login to 1Password
+    deps: [install]
+    silent: true
+    status:
+      - op whoami
+    cmds:
+      - task: os:login
