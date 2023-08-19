@@ -87,3 +87,18 @@ tasks:
           OUTPUT_FILE: ".env"
           OUTPUT_APPEND: true
           OUTPUT_TEMPLATE: "VALUE=$SECRET"
+
+  fetch-secret:
+    desc: Fetch a secret from 1Password
+    silent: true
+    vars:
+      TEMP_DIR:
+        sh: mktemp -d
+    cmds:
+      - defer: rm -rf "{{.TEMP_DIR}}"
+      - task: 1password:fetch
+        vars:
+          KEY: "pkwmme3omm3owhvcwbwxrrpzuy"
+          FIELDS: "notesPlain"
+          OUTPUT: "{{.TEMP_DIR}}/secret.txt"
+      - cat "{{.TEMP_DIR}}/secret.txt"

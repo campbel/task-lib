@@ -7,7 +7,6 @@ tasks:
 
   login:
     desc: Login to 1Password
-    deps: [install]
     silent: true
     status:
       - op whoami
@@ -32,3 +31,15 @@ tasks:
         echo "{{.INSTRUCTIONS}}"
         read -p "Press enter to continue"
         (op signin 2> /dev/null)
+
+  list:
+    desc: List secrets in 1Password
+    silent: true
+    cmds:
+      - op item list
+
+  fetch:
+    desc: Fetch a secret from 1Password
+    silent: true
+    cmds:
+      - op item get "{{.KEY}}" --fields "{{.FIELDS}}" > "{{.OUTPUT}}"

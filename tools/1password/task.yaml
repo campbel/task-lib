@@ -19,3 +19,24 @@ tasks:
       - op whoami
     cmds:
       - task: os:login
+
+  list:
+    desc: List secrets in 1Password
+    deps: [login]
+    silent: true
+    cmds:
+      - op item list
+
+  fetch:
+    desc: Fetch a secret from 1Password
+    deps: [login]
+    silent: true
+    required:
+      vars: [KEY, FIELDS, OUTPUT]
+    prompt: "A task is trying to fetch {{.FIELDS}} for {{.KEY}} from 1Password. Please confirm before continuing."
+    cmds:
+      - task: os:fetch
+        vars:
+          KEY: "{{.KEY}}"
+          FIELDS: "{{.FIELDS}}"
+          OUTPUT: "{{.OUTPUT}}"
