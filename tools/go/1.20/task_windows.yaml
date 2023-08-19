@@ -35,6 +35,6 @@ tasks:
         }
 
         Write-Output "Running installer"
-        msiexec /i $msi_path /quiet
+        msiexec /i $msi_path /passive
     cmds:
       - powershell '{{.PS_SCRIPT}}'
